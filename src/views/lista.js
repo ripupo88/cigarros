@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
@@ -12,215 +12,101 @@ import Avatar from '@material-ui/core/Avatar';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+//imports
+import { cigarList } from '../assets/info/cigar';
 
 const useStyles = makeStyles(theme =>
-    createStyles({
-        root: {
-            width: '100%',
-            maxWidth: 500,
-            backgroundColor: theme.palette.background.paper
-        },
-        small: {
-            // padding: 3,
-            width: theme.spacing(3),
-            height: theme.spacing(3),
-            backgroundColor: 'blue'
-        },
-        nested: {
-            paddingLeft: theme.spacing(4)
-        }
-    })
+   createStyles({
+      root: {
+         width: '100%',
+         maxWidth: 500,
+         backgroundColor: theme.palette.background.paper
+      },
+      small: {
+         // padding: 3,
+         width: theme.spacing(3),
+         height: theme.spacing(3),
+         backgroundColor: 'blue'
+      },
+      nested: {
+         paddingLeft: theme.spacing(4)
+      }
+   })
 );
 
 export default function NestedList() {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
+   const classes = useStyles();
+   const [open, setOpen] = React.useState(cigarList);
+   console.log(open);
+   const handleClick = e => {
+      setOpen(!open);
+   };
 
-    const handleClick = () => {
-        setOpen(!open);
-    };
-
-    return (
-        <List
+   return (
+      <div>
+         <List
+            style={{ paddingTop: 25 }}
             component="nav"
             aria-labelledby="nested-list-subheader"
             className={classes.root}
-        >
-            <ListItem button>
-                <ListItemIcon>
-                    <Avatar
-                        src="../assets/img/benson24.jpg"
-                        className={classes.small}
-                    ></Avatar>
-                </ListItemIcon>
-                <ListItemText primary="MARLBORO" />
-            </ListItem>
-            <ListItem button>
-                <ListItemIcon>
-                    <Badge badgeContent={2} color="primary">
-                        <ShoppingCartOutlinedIcon />
-                    </Badge>
-                </ListItemIcon>
-                <ListItemText primary="L&M" />
-            </ListItem>
-            <ListItem button onClick={handleClick}>
-                <ListItemIcon>
-                    <Badge badgeContent={0} color="primary">
-                        <ShoppingCartOutlinedIcon />
-                    </Badge>
-                </ListItemIcon>
-                <ListItemText primary="BENSON H" />
-                {open ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                    <ListItem button className={classes.nested}>
+         >
+            {cigarList.map((value, i) => {
+               return (
+                  <Fragment key={i}>
+                     <ListItem
+                        button
+                        onClick={() => {
+                           let newOpen = open;
+                           newOpen[i].open = !newOpen[i].open;
+                           setOpen(newOpen);
+                        }}
+                     >
                         <ListItemIcon>
-                            <Badge badgeContent={0} color="primary">
-                                <ShoppingCartOutlinedIcon />
-                            </Badge>
+                           <Avatar
+                              variant="rounded"
+                              alt="4"
+                              src="assets/img/benson24.jpg"
+                              //style={{ width: 50 }}
+                           />
                         </ListItemIcon>
-                        <ListItemText primary="OPTION" />
-                    </ListItem>
-                    <ListItem button className={classes.nested}>
-                        <ListItemIcon>
-                            <Badge badgeContent={0} color="primary">
-                                <ShoppingCartOutlinedIcon />
-                            </Badge>
-                        </ListItemIcon>
-                        <ListItemText primary="24 (VEINTICUATRO)" />
-                    </ListItem>
-                </List>
-            </Collapse>
-            <ListItem button onClick={handleClick}>
-                <ListItemIcon>
-                    <Badge badgeContent={1} color="primary">
-                        <ShoppingCartOutlinedIcon />
-                    </Badge>
-                </ListItemIcon>
-                <ListItemText primary="FORTUNA" />
-                {open ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                    <ListItem button className={classes.nested}>
-                        <ListItemIcon>
-                            <Badge badgeContent={1} color="primary">
-                                <ShoppingCartOutlinedIcon />
-                            </Badge>
-                        </ListItemIcon>
-                        <ListItemText primary="NORMAL (RED LINE)" />
-                    </ListItem>
-                    <ListItem button className={classes.nested}>
-                        <ListItemIcon>
-                            <Badge badgeContent={0} color="primary">
-                                <ShoppingCartOutlinedIcon />
-                            </Badge>
-                        </ListItemIcon>
-                        <ListItemText primary="24 (VEINTICUATRO)" />
-                    </ListItem>
-                </List>
-            </Collapse>
-            <ListItem button onClick={handleClick}>
-                <ListItemIcon>
-                    <Badge badgeContent={0} color="primary">
-                        <ShoppingCartOutlinedIcon />
-                    </Badge>
-                </ListItemIcon>
-                <ListItemText primary="BENSON H" />
-                {open ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                    <ListItem button className={classes.nested}>
-                        <ListItemIcon>
-                            <Badge badgeContent={0} color="primary">
-                                <ShoppingCartOutlinedIcon />
-                            </Badge>
-                        </ListItemIcon>
-                        <ListItemText primary="OPTION" />
-                    </ListItem>
-                    <ListItem button className={classes.nested}>
-                        <ListItemIcon>
-                            <Badge badgeContent={0} color="primary">
-                                <ShoppingCartOutlinedIcon />
-                            </Badge>
-                        </ListItemIcon>
-                        <ListItemText primary="24 (VEINTICUATRO)" />
-                    </ListItem>
-                </List>
-            </Collapse>
-            <ListItem button onClick={handleClick}>
-                <ListItemIcon>
-                    <Badge badgeContent={1} color="primary">
-                        <ShoppingCartOutlinedIcon />
-                    </Badge>
-                </ListItemIcon>
-                <ListItemText primary="FORTUNA" />
-                {open ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                    <ListItem button className={classes.nested}>
-                        <ListItemIcon>
-                            <Badge badgeContent={1} color="primary">
-                                <ShoppingCartOutlinedIcon />
-                            </Badge>
-                        </ListItemIcon>
-                        <ListItemText primary="NORMAL (RED LINE)" />
-                    </ListItem>
-                    <ListItem button className={classes.nested}>
-                        <ListItemIcon>
-                            <Badge badgeContent={0} color="primary">
-                                <ShoppingCartOutlinedIcon />
-                            </Badge>
-                        </ListItemIcon>
-                        <ListItemText primary="24 (VEINTICUATRO)" />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <Avatar className={classes.small}>0</Avatar>
-                        </ListItemIcon>
-                        <ListItemText primary="MARLBORO" />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <Avatar className={classes.small}>0</Avatar>
-                        </ListItemIcon>
-                        <ListItemText primary="MARLBORO" />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <Avatar className={classes.small}>0</Avatar>
-                        </ListItemIcon>
-                        <ListItemText primary="MARLBORO" />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <Avatar className={classes.small}>0</Avatar>
-                        </ListItemIcon>
-                        <ListItemText primary="MARLBORO" />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <Avatar className={classes.small}>0</Avatar>
-                        </ListItemIcon>
-                        <ListItemText primary="MARLBORO" />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <Avatar className={classes.small}>0</Avatar>
-                        </ListItemIcon>
-                        <ListItemText primary="MARLBORO" />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <Avatar className={classes.small}>0</Avatar>
-                        </ListItemIcon>
-                        <ListItemText primary="MARLBORO" />
-                    </ListItem>
-                </List>
-            </Collapse>
-        </List>
-    );
+                        <ListItemText primary={value.marca} />
+                        {open[i].open ? <ExpandLess /> : <ExpandMore />}
+                     </ListItem>
+                     <Collapse in={open[i].open} timeout="auto" unmountOnExit>
+                        {value.variantes.map((value2, i2) => {
+                           return (
+                              <List key={i2} component="div" disablePadding>
+                                 <ListItem button className={classes.nested}>
+                                    <ListItemIcon>
+                                       <Badge
+                                          anchorOrigin={{
+                                             vertical: 'top',
+                                             horizontal: 'left'
+                                          }}
+                                          badgeContent={2}
+                                          color="primary"
+                                       >
+                                          <Avatar
+                                             variant="square"
+                                             alt={value.marca}
+                                             src={value2.img}
+                                             style={{
+                                                width: 100,
+                                                paddingRight: 10
+                                             }}
+                                          />
+                                       </Badge>
+                                    </ListItemIcon>
+                                    <ListItemText primary={value2.nombre} />
+                                 </ListItem>
+                              </List>
+                           );
+                        })}
+                     </Collapse>
+                  </Fragment>
+               );
+            })}
+         </List>
+      </div>
+   );
 }

@@ -23,92 +23,88 @@ import SmokingRoomsIcon from '@material-ui/icons/SmokingRooms';
 //views
 import Lista from '../views/lista';
 
-import GridItem from '../components/Grid/GridItem';
-import GridContainer from '../components/Grid/GridContainer';
-
 //import routes from 'routes.js';
 import styles from '../assets/styles/adminStyle';
 
 const useStyles = makeStyles(styles);
 
 export default function Admin({ ...rest }) {
-    const [loged, setLoged] = useState(localStorage.getItem('token') || '');
-    const classes = useStyles();
-    const [value, setValue] = React.useState('recents');
+   const [loged, setLoged] = useState(localStorage.getItem('token') || '');
+   const classes = useStyles();
+   const [value, setValue] = React.useState('recents');
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-    if (loged === '') return <Redirect to="/login" />;
-    return (
-        <div>
-            <div>
-                <AppBar
-                    className={classes.appBarUp}
-                    position="fixed"
-                    color="inherit"
-                    position="static"
-                >
-                    <Toolbar>
-                        <Typography variant="h6" className={classes.title}>
-                            Listado de cigarros
-                        </Typography>
-                        <IconButton
-                            edge="start"
-                            className={classes.menuButton}
-                            color="inherit"
-                            aria-label="menu"
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
-            </div>
-            <div
-                style={{
-                    textAlign: 'center',
-                    maxWith: '50%',
-                    paddingTop: '10%',
-                    paddingBottom: '50px'
-                }}
+   const handleChange = (event, newValue) => {
+      setValue(newValue);
+   };
+   if (loged === '') return <Redirect to="/login" />;
+   return (
+      <div>
+         <div style={{ width: '100%' }}>
+            <AppBar
+               className={classes.appBarUp}
+               position="fixed"
+               color="inherit"
             >
-                <Switch>
-                    <Route exact path="/admin">
-                        <Lista />
-                    </Route>
-                    {/* <Route path="/admin/:id">
+               <Toolbar style={{ width: '100%' }}>
+                  <Typography variant="h6" className={classes.title}>
+                     Listado de cigarros
+                  </Typography>
+                  <IconButton
+                     edge="start"
+                     className={classes.menuButton}
+                     color="inherit"
+                     aria-label="menu"
+                  >
+                     <MenuIcon />
+                  </IconButton>
+               </Toolbar>
+            </AppBar>
+         </div>
+         <div
+            style={{
+               textAlign: 'center',
+               maxWith: '50%',
+               paddingTop: '10%',
+               paddingBottom: '50px'
+            }}
+         >
+            <Switch>
+               <Route exact path="/admin">
+                  <Lista />
+               </Route>
+               {/* <Route path="/admin/:id">
                         <Info />
                     </Route> */}
-                </Switch>
-            </div>
-            <div className={classes.appBar}>
-                <BottomNavigation
-                    value={value}
-                    onChange={handleChange}
-                    className={classes.root}
-                >
-                    <BottomNavigationAction
-                        label="Recents"
-                        value="recents"
-                        icon={<RestoreIcon />}
-                    />
-                    <BottomNavigationAction
-                        label="Favorites"
-                        value="favorites"
-                        icon={<FavoriteIcon />}
-                    />
-                    <BottomNavigationAction
-                        label="Nearby"
-                        value="nearby"
-                        icon={<LocationOnIcon />}
-                    />
-                    <BottomNavigationAction
-                        label="Folder"
-                        value="folder"
-                        icon={<FolderIcon />}
-                    />
-                </BottomNavigation>
-            </div>
-        </div>
-    );
+            </Switch>
+         </div>
+         <div>
+            <BottomNavigation
+               value={value}
+               onChange={handleChange}
+               className={classes.appBar}
+            >
+               <BottomNavigationAction
+                  label="Recents"
+                  value="recents"
+                  icon={<RestoreIcon />}
+               />
+               <BottomNavigationAction
+                  label="Favorites"
+                  value="favorites"
+                  icon={<FavoriteIcon />}
+               />
+               <BottomNavigationAction
+                  label="Nearby"
+                  value="nearby"
+                  icon={<LocationOnIcon />}
+               />
+               <BottomNavigationAction
+                  label="Folder"
+                  value="folder"
+                  icon={<FolderIcon />}
+               />
+            </BottomNavigation>
+         </div>
+      </div>
+   );
 }
