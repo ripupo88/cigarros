@@ -24,10 +24,13 @@ import SendIcon from '@material-ui/icons/Send';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 //imports
 import { cigarList } from '../assets/info/cigar';
 
-let miCigarList = JSON.parse(JSON.stringify(cigarList));
+let miCigarList = JSON.parse(
+   JSON.stringify(cigarList.filter(variantes.pedido != 0))
+);
 
 const useStyles = makeStyles(theme =>
    createStyles({
@@ -69,13 +72,7 @@ const newSetPedido = () => {
 
 export default function NestedList() {
    const classes = useStyles();
-   const [cigList, setCigList] = React.useState(() => {
-      let open = [];
-      for (let i = 0; i < miCigarList.length; i++) {
-         open.push(false);
-      }
-      return open;
-   });
+   const [cigList, setCigList] = React.useState(false);
 
    const [pedidoState, setPedidoState] = React.useState(newSetPedido());
    const [anchorEl, setAnchorEl] = React.useState(null);
@@ -97,7 +94,7 @@ export default function NestedList() {
          <AppBar position="fixed" color="inherit">
             <Toolbar style={{ width: '100%' }}>
                <Typography variant="h6" className={classes.title}>
-                  Listado de cigarros
+                  Lista de pedidos
                </Typography>
                <IconButton
                   onClick={handleClick}
@@ -143,38 +140,25 @@ export default function NestedList() {
             aria-labelledby="nested-list-subheader"
             className={classes.root}
          >
-            {miCigarList.map((value, i) => {
-               return (
-                  <Fragment key={i}>
-                     <ListItem
-                        button
-                        onClick={e => {
-                           let newList = !cigList[i];
-                           setCigList({
-                              ...cigList,
-                              [i]: newList
-                           });
-                           console.log('open', cigList[i]);
-                        }}
-                     >
-                        <ListItemIcon>
-                           <Avatar
-                              variant="rounded"
-                              alt="4"
-                              src={'/assets/img/' + value.variantes[0].img}
-                              //style={{ width: 50 }}
-                           />
-                        </ListItemIcon>
-                        <ListItemText
-                           primary={
-                              <Typography variant="h6" component="h6">
-                                 {value.marca.toUpperCase()}
-                              </Typography>
-                           }
-                        />
-                        {cigList[i] ? <ExpandLess /> : <ExpandMore />}
-                     </ListItem>
-                     <Collapse in={cigList[i]} timeout="auto" unmountOnExit>
+            <ListItem button onClick={() => setCigList(!cigList)}>
+               <ListItemIcon>
+                  <Avatar style={{ backgroundColor: '#000000' }}>
+                     <AssignmentIcon />
+                  </Avatar>
+               </ListItemIcon>
+               <ListItemText
+                  primary={
+                     <Typography variant="h6" component="h6">
+                        Pedido
+                     </Typography>
+                  }
+               />
+               {cigList ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={cigList} timeout="auto" unmountOnExit>
+               {miCigarList.map((value, i) => {
+                  return (
+                     <Fragment key={i}>
                         {miCigarList[i].variantes.map((value2, i2) => {
                            return (
                               <List key={i2} component="div" disablePadding>
@@ -227,10 +211,10 @@ export default function NestedList() {
                               </List>
                            );
                         })}
-                     </Collapse>
-                  </Fragment>
-               );
-            })}
+                     </Fragment>
+                  );
+               })}
+            </Collapse>
          </List>
       </div>
    );
