@@ -10,7 +10,7 @@ import gql from 'graphql-tag';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
 //import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,18 +21,18 @@ import { Redirect } from 'react-router-dom';
 // import { resolve } from 'dns';
 // const history = createBrowserHistory({ forceRefresh: false });
 
-function Copyright() {
-   return (
-      <Typography variant="body2" color="textSecondary" align="center">
-         {'Copyright © '}
-         <Link color="inherit" href="https://material-ui.com/">
-            Your Website
-         </Link>{' '}
-         {new Date().getFullYear()}
-         {'.'}
-      </Typography>
-   );
-}
+// function Copyright() {
+//    return (
+//       <Typography variant="body2" color="textSecondary" align="center">
+//          {'Copyright © '}
+//          <Link color="inherit" href="https://material-ui.com/">
+//             Your Website
+//          </Link>{' '}
+//          {new Date().getFullYear()}
+//          {'.'}
+//       </Typography>
+//    );
+// }
 
 const cache = new InMemoryCache();
 const client = new ApolloClient({

@@ -1,13 +1,16 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import Badge from '@material-ui/core/Badge';
 import Avatar from '@material-ui/core/Avatar';
-//iconos
+//modal
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 //appbar
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -22,8 +25,6 @@ import Fade from '@material-ui/core/Fade';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import SendIcon from '@material-ui/icons/Send';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 //imports
 import { cigarList } from '../assets/info/cigar';
 
@@ -57,6 +58,8 @@ const useStyles = makeStyles(theme =>
          backgroundColor: 'blue'
       },
       nested: {
+         paddingTop: theme.spacing(0),
+         paddingBottom: theme.spacing(0),
          paddingLeft: theme.spacing(4)
       },
       title: {
@@ -64,51 +67,91 @@ const useStyles = makeStyles(theme =>
       },
       menuButton: {
          marginRight: theme.spacing(3)
+      },
+      modal: {
+         display: 'flex',
+         alignItems: 'center',
+         justifyContent: 'center'
+      },
+      paper: {
+         backgroundColor: theme.palette.background.paper,
+         padding: theme.spacing(2, 4, 3)
+      },
+      button: {
+         margin: theme.spacing(1)
       }
    })
 );
 
-const newSetPedido = () => {
-   let ped = [];
-   for (let i = 0; i < miCigarList.length; i++) {
-      ped.push([]);
-      for (let n = 0; n < miCigarList[i].variantes.length; n++) {
-         ped[i].push(miCigarList[i].variantes[n].pedido);
-      }
-   }
-   return ped;
-};
-
 export default function NestedList() {
    const classes = useStyles();
-   const [cigList, setCigList] = React.useState(() => {
-      let open = [];
-      for (let i = 0; i < miCigarList.length; i++) {
-         open.push(false);
-      }
-      return open;
-   });
-
-   const [pedidoState, setPedidoState] = React.useState(newSetPedido());
+   const [openModal, setOpenModal] = React.useState(false);
    const [anchorEl, setAnchorEl] = React.useState(null);
    const open = Boolean(anchorEl);
+   const [nameCig, setNameCig] = React.useState(null);
 
    const handleClick = event => {
       setAnchorEl(event.currentTarget);
+      setOpenModal(false);
+   };
+
+   const handleModalClick = () => {
+      setOpenModal(false);
    };
 
    const handleClose = () => {
+      setOpenModal(false);
       miCigarList = JSON.parse(JSON.stringify(cigarList));
-      setPedidoState(newSetPedido());
       setAnchorEl(null);
+   };
+
+   const handlePedidoClick = (i, i2, item) => {
+      setNameCig(item.nombre);
+      setOpenModal(true);
    };
 
    return (
       <div>
+         <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={openModal}
+            onClose={handleClose}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+               timeout: 500
+            }}
+         >
+            <Fade in={openModal}>
+               <div className={classes.paper}>
+                  <h2 id="transition-modal-title">{nameCig}</h2>
+                  <p id="transition-modal-description">Entrada en almacén.</p>
+                  <TextField
+                     autoFocus
+                     type="Number"
+                     label="Cantidad"
+                     id="margin-none"
+                     className={classes.textField}
+                     helperText="Número de cartones"
+                  />
+                  <Button
+                     onClick={handleModalClick}
+                     variant="contained"
+                     color="primary"
+                     className={classes.button}
+                     //endIcon={<Icon>send</Icon>}
+                  >
+                     Send
+                  </Button>
+               </div>
+            </Fade>
+         </Modal>
          <AppBar position="fixed" color="inherit">
             <Toolbar style={{ width: '100%' }}>
                <Typography variant="h6" className={classes.title}>
-                  Listado de cigarros
+                  Almacén
                </Typography>
                <IconButton
                   onClick={handleClick}
@@ -157,72 +200,32 @@ export default function NestedList() {
             {miCigarList.map((value, i) => {
                return (
                   <Fragment key={i}>
-                     <ListItem
-                        button
-                        onClick={e => {
-                           let newList = !cigList[i];
-                           setCigList({
-                              ...cigList,
-                              [i]: newList
-                           });
-                        }}
-                     >
-                        <ListItemIcon>
-                           <Avatar
-                              variant="rounded"
-                              alt="4"
-                              src={'/assets/img/' + value.variantes[0].img}
-                              //style={{ width: 50 }}
-                           />
-                        </ListItemIcon>
-                        <ListItemText
-                           primary={
-                              <Typography variant="h6" component="h6">
-                                 {value.marca.toUpperCase()}
-                              </Typography>
-                           }
-                        />
-                        {cigList[i] ? <ExpandLess /> : <ExpandMore />}
-                     </ListItem>
-                     <Collapse in={cigList[i]} timeout="auto" unmountOnExit>
-                        {miCigarList[i].variantes.map((value2, i2) => {
-                           return (
-                              <List key={i2} component="div" disablePadding>
-                                 <ListItem button className={classes.nested}>
-                                    <ListItemIcon
-                                       onClick={() => {
-                                          miCigarList[i].variantes[i2].pedido++;
-                                          let num =
-                                             miCigarList[i].variantes[i2]
-                                                .pedido;
-                                          setPedidoState({
-                                             ...pedidoState,
-                                             [i]: {
-                                                ...pedidoState[i],
-                                                [i2]: num
-                                             }
-                                          });
+                     {miCigarList[i].variantes.map((value2, i2) => {
+                        return (
+                           <List key={i2} component="div" disablePadding>
+                              <ListItem button className={classes.nested}>
+                                 <ListItemIcon
+                                    onClick={() => {
+                                       handlePedidoClick(i, i2, value2);
+                                    }}
+                                 >
+                                    <Avatar
+                                       variant="square"
+                                       alt={value.marca}
+                                       src={'/assets/img/' + value2.img}
+                                       style={{
+                                          width: 100,
+                                          marginRight: 10
                                        }}
-                                    >
-                                       <Badge
-                                          anchorOrigin={{
-                                             vertical: 'top',
-                                             horizontal: 'left'
-                                          }}
-                                          badgeContent={pedidoState[i][i2]}
-                                          color="primary"
-                                       >
-                                          <Avatar
-                                             variant="square"
-                                             alt={value.marca}
-                                             src={'/assets/img/' + value2.img}
-                                             style={{
-                                                width: 100,
-                                                marginRight: 10
-                                             }}
-                                          />
-                                       </Badge>
-                                    </ListItemIcon>
+                                    />
+                                 </ListItemIcon>
+                                 <Link
+                                    style={{
+                                       textDecoration: 'none',
+                                       color: 'black'
+                                    }}
+                                    to="almacen/informe"
+                                 >
                                     <ListItemText
                                        primary={
                                           <Typography
@@ -232,12 +235,13 @@ export default function NestedList() {
                                              {value2.nombre}
                                           </Typography>
                                        }
+                                       secondary={`Stock: ${value2.stock}`}
                                     />
-                                 </ListItem>
-                              </List>
-                           );
-                        })}
-                     </Collapse>
+                                 </Link>
+                              </ListItem>
+                           </List>
+                        );
+                     })}
                   </Fragment>
                );
             })}

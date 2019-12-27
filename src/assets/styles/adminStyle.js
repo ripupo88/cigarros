@@ -44,7 +44,6 @@ const appStyle = theme => ({
       zIndex: theme.zIndex.appBar,
       flexShrink: 0,
       position: 'fixed',
-      width: '100%',
       top: 'auto',
       bottom: 0,
       backgroundColor: '#efefef'

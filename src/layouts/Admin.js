@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-
 //icons
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import FormatListNumberedRoundedIcon from '@material-ui/icons/FormatListNumberedRounded';
-import BarChartIcon from '@material-ui/icons/BarChart';
+import StoreIcon from '@material-ui/icons/Store';
 //button
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -14,8 +13,10 @@ import SmokingRoomsIcon from '@material-ui/icons/SmokingRooms';
 //views
 import Lista from '../views/lista';
 import Pedido from '../views/pedido';
+import Almacen from '../views/almacen';
 //import routes from 'routes.js';
 import styles from '../assets/styles/adminStyle';
+import Informe from '../views/informe';
 
 const useStyles = makeStyles(styles);
 
@@ -25,27 +26,33 @@ export default function Admin({ ...rest }) {
    const [value, setValue] = React.useState('pedir');
    const history = useHistory();
 
+   if (localStorage.getItem('token') === undefined) {
+      setLoged('');
+   }
+
    const handleChange = (event, newValue) => {
+      if (localStorage.getItem('token') === undefined) {
+         setLoged('');
+      }
       setValue(newValue);
       history.push(`/admin/${newValue}`);
    };
    if (loged === '') return <Redirect to="/login" />;
    return (
       <div>
-         <div
-            style={
-               {
-                  // paddingTop: '40px',
-                  // paddingBottom: '50px'
-               }
-            }
-         >
+         <div>
             <Switch>
                <Route path="/admin/pedir">
                   <Lista />
                </Route>
-               <Route path="/admin/pedidos">
+               <Route path="/admin/pedido">
                   <Pedido />
+               </Route>
+               <Route exact path="/admin/almacen">
+                  <Almacen />
+               </Route>
+               <Route path="/admin/almacen/informe">
+                  <Informe />
                </Route>
                {/* <Route path="/admin/:id">
                         <Info />
@@ -64,20 +71,20 @@ export default function Admin({ ...rest }) {
                icon={<ShoppingCartOutlinedIcon />}
             />
             <BottomNavigationAction
-               label="Pedidos"
-               value="pedidos"
+               label="Pedido"
+               value="pedido"
                icon={<FormatListNumberedRoundedIcon />}
             />
             <BottomNavigationAction
-               label="Existencias"
-               value="nearby"
-               icon={<BarChartIcon />}
+               label="Almacen"
+               value="almacen"
+               icon={<StoreIcon />}
             />
-            <BottomNavigationAction
+            {/* <BottomNavigationAction
                label="Informe"
                value="informe"
                icon={<SmokingRoomsIcon />}
-            />
+            /> */}
          </BottomNavigation>
       </div>
    );

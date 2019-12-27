@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -7,7 +7,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import Badge from '@material-ui/core/Badge';
 import Avatar from '@material-ui/core/Avatar';
-//iconos
 //appbar
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -22,15 +21,41 @@ import Fade from '@material-ui/core/Fade';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import SendIcon from '@material-ui/icons/Send';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
-import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 //imports
 import { cigarList } from '../assets/info/cigar';
 
 let miCigarList = JSON.parse(
-   JSON.stringify(cigarList.filter(variantes.pedido != 0))
+   JSON.stringify(
+      (() => {
+         // var result = [];
+         // cigarList.map(elem => {
+         //    for (var i = 0; i < elem.variantes.length; i++) {
+         //       if (elem.variantes[i].pedido > 0) {
+         //          result.push(elem.variantes[i]);
+         //       }
+         //    }
+         // });
+         //return result;
+         console.log(cigarList.sort(compare));
+         return cigarList.sort(compare);
+      })()
+   )
 );
+
+function compare(a, b) {
+   const bandA = a.marca.toUpperCase();
+   const bandB = b.marca.toUpperCase();
+
+   let comparison = 0;
+   if (bandA > bandB) {
+      comparison = 1;
+   } else if (bandA < bandB) {
+      comparison = -1;
+   }
+   return comparison;
+}
 
 const useStyles = makeStyles(theme =>
    createStyles({
@@ -59,12 +84,11 @@ const useStyles = makeStyles(theme =>
 );
 
 const newSetPedido = () => {
-   console.log('pedido');
    let ped = [];
    for (let i = 0; i < miCigarList.length; i++) {
       ped.push([]);
       for (let n = 0; n < miCigarList[i].variantes.length; n++) {
-         ped[i].push(0);
+         ped[i].push(miCigarList[i].variantes[n].pedido);
       }
    }
    return ped;
@@ -72,7 +96,6 @@ const newSetPedido = () => {
 
 export default function NestedList() {
    const classes = useStyles();
-   const [cigList, setCigList] = React.useState(false);
 
    const [pedidoState, setPedidoState] = React.useState(newSetPedido());
    const [anchorEl, setAnchorEl] = React.useState(null);
@@ -84,9 +107,19 @@ export default function NestedList() {
 
    const handleClose = () => {
       miCigarList = JSON.parse(JSON.stringify(cigarList));
-      setPedidoState(newSetPedido());
-      console.log(miCigarList, cigarList);
       setAnchorEl(null);
+   };
+
+   const handlePedidoClick = (i, i2) => {
+      let num = miCigarList[i].variantes[i2].pedido;
+      if (miCigarList[i].variantes[i2].pedido > 1) {
+         miCigarList[i].variantes[i2].pedido--;
+         num--;
+      } else {
+         miCigarList[i].variantes.splice(i2, 1);
+      }
+      setPedidoState(newSetPedido());
+      console.log('pedidoState', pedidoState);
    };
 
    return (
@@ -140,7 +173,7 @@ export default function NestedList() {
             aria-labelledby="nested-list-subheader"
             className={classes.root}
          >
-            <ListItem button onClick={() => setCigList(!cigList)}>
+            <ListItem button>
                <ListItemIcon>
                   <Avatar style={{ backgroundColor: '#000000' }}>
                      <AssignmentIcon />
@@ -153,63 +186,57 @@ export default function NestedList() {
                      </Typography>
                   }
                />
-               {cigList ? <ExpandLess /> : <ExpandMore />}
+               <ExpandMore />
             </ListItem>
-            <Collapse in={cigList} timeout="auto" unmountOnExit>
+            <Collapse in={true} timeout="auto" unmountOnExit>
                {miCigarList.map((value, i) => {
                   return (
                      <Fragment key={i}>
                         {miCigarList[i].variantes.map((value2, i2) => {
-                           return (
-                              <List key={i2} component="div" disablePadding>
-                                 <ListItem button className={classes.nested}>
-                                    <ListItemIcon
-                                       onClick={() => {
-                                          miCigarList[i].variantes[i2].pedido++;
-                                          let num =
-                                             miCigarList[i].variantes[i2]
-                                                .pedido;
-                                          setPedidoState({
-                                             ...pedidoState,
-                                             [i]: {
-                                                ...pedidoState[i],
-                                                [i2]: num
-                                             }
-                                          });
-                                       }}
-                                    >
-                                       <Badge
-                                          anchorOrigin={{
-                                             vertical: 'top',
-                                             horizontal: 'left'
+                           if (value2.pedido > 0) {
+                              return (
+                                 <List key={i2} component="div" disablePadding>
+                                    <ListItem button className={classes.nested}>
+                                       <ListItemIcon
+                                          onClick={() => {
+                                             handlePedidoClick(i, i2);
                                           }}
-                                          badgeContent={pedidoState[i][i2]}
-                                          color="primary"
                                        >
-                                          <Avatar
-                                             variant="square"
-                                             alt={value.marca}
-                                             src={'/assets/img/' + value2.img}
-                                             style={{
-                                                width: 100,
-                                                marginRight: 10
+                                          <Badge
+                                             anchorOrigin={{
+                                                vertical: 'top',
+                                                horizontal: 'left'
                                              }}
-                                          />
-                                       </Badge>
-                                    </ListItemIcon>
-                                    <ListItemText
-                                       primary={
-                                          <Typography
-                                             variant="button"
-                                             component="h4"
+                                             badgeContent={pedidoState[i][i2]}
+                                             color="primary"
                                           >
-                                             {value2.nombre}
-                                          </Typography>
-                                       }
-                                    />
-                                 </ListItem>
-                              </List>
-                           );
+                                             <Avatar
+                                                variant="square"
+                                                alt={value.marca}
+                                                src={
+                                                   '/assets/img/' + value2.img
+                                                }
+                                                style={{
+                                                   width: 100,
+                                                   marginRight: 10
+                                                }}
+                                             />
+                                          </Badge>
+                                       </ListItemIcon>
+                                       <ListItemText
+                                          primary={
+                                             <Typography
+                                                variant="button"
+                                                component="h4"
+                                             >
+                                                {value2.nombre}
+                                             </Typography>
+                                          }
+                                       />
+                                    </ListItem>
+                                 </List>
+                              );
+                           }
                         })}
                      </Fragment>
                   );
