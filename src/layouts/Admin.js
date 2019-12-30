@@ -1,6 +1,9 @@
 import React, { useState, Fragment } from "react";
 import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+//apollo
+import { ApolloProvider } from "@apollo/react-hooks";
+import ApolloClient from "apollo-boost";
 //icons
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import FormatListNumberedRoundedIcon from "@material-ui/icons/FormatListNumberedRounded";
@@ -17,6 +20,10 @@ import styles from "../assets/styles/adminStyle";
 import Informe from "../views/informe";
 
 const useStyles = makeStyles(styles);
+
+const client = new ApolloClient({
+  uri: "http://localhost:4000"
+});
 
 export default function Admin({ ...rest }) {
   const [loged, setLoged] = useState(localStorage.getItem("token") || "");
@@ -37,7 +44,7 @@ export default function Admin({ ...rest }) {
   };
   if (loged === "") return <Redirect to="/login" />;
   return (
-    <Fragment>
+    <ApolloProvider client={client}>
       <Switch>
         <Route path="/admin/pedir">
           <Lista />
@@ -77,6 +84,6 @@ export default function Admin({ ...rest }) {
           icon={<StoreIcon />}
         />
       </BottomNavigation>
-    </Fragment>
+    </ApolloProvider>
   );
 }

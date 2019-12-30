@@ -218,7 +218,7 @@ export default function NestedList() {
                 >
                   <Avatar
                     variant="square"
-                    src={"/assets/img/" + value2.img}
+                    src={value2.img}
                     style={{
                       width: 100,
                       marginRight: 10
