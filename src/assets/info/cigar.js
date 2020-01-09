@@ -5,35 +5,35 @@ const cigarList = [
     variantes: [
       {
         nombre: "Marlboro Normal",
-        img: "https://i.imgur.com/B0ZJyF5.jpg",
+        img: "https://i.imgur.com/jZ7k310.jpg",
         pedido: 2,
         stock: 25,
         ventas: 32
       },
       {
         nombre: "Marlboro Mix",
-        img: "https://i.imgur.com/cUnpXBp.jpg",
+        img: "https://i.imgur.com/jZ7k310.jpg",
         pedido: 0,
         stock: 14,
         ventas: 44
       },
       {
         nombre: "Marlboro Pocket",
-        img: "https://i.imgur.com/B0ZJyF5.jpg",
+        img: "https://i.imgur.com/jZ7k310.jpg",
         pedido: 1,
         stock: 18,
         ventas: 35
       },
       {
         nombre: "Marlboro Beyond",
-        img: "https://i.imgur.com/xflYKdF.jpg",
+        img: "https://i.imgur.com/jZ7k310.jpg",
         pedido: 0,
         stock: 2,
         ventas: 16
       },
       {
         nombre: "Marlboro Gold",
-        img: "https://i.imgur.com/aCvIK5m.jpg",
+        img: "https://i.imgur.com/jZ7k310.jpg",
         pedido: 1,
         stock: 10,
         ventas: 10
@@ -46,21 +46,21 @@ const cigarList = [
     variantes: [
       {
         nombre: "Benson Normal",
-        img: "https://i.imgur.com/MUQIPQ1.jpg",
+        img: "https://i.imgur.com/jZ7k310.jpg",
         pedido: 0,
         stock: 4,
         ventas: 58
       },
       {
         nombre: "Benson Option",
-        img: "https://i.imgur.com/QFsfomy.jpg",
+        img: "https://i.imgur.com/jZ7k310.jpg",
         pedido: 0,
         stock: 12,
         ventas: 65
       },
       {
         nombre: "Benson 24",
-        img: "https://i.imgur.com/7xRLC0e.jpg",
+        img: "https://i.imgur.com/jZ7k310.jpg",
         pedido: 1,
         stock: 0,
         ventas: 19
@@ -73,21 +73,21 @@ const cigarList = [
     variantes: [
       {
         nombre: "Lucky Normal",
-        img: "https://i.imgur.com/Mx5gCZs.jpg",
+        img: "https://i.imgur.com/jZ7k310.jpg",
         pedido: 0,
         stock: 6,
         ventas: 25
       },
       {
         nombre: "Lucky Doble",
-        img: "https://i.imgur.com/akzKxcS.jpg",
+        img: "https://i.imgur.com/jZ7k310.jpg",
         pedido: 2,
         stock: 11,
         ventas: 37
       },
       {
         nombre: "Lucky Verde",
-        img: "https://i.imgur.com/A32IuWL.jpg",
+        img: "https://i.imgur.com/jZ7k310.jpg",
         pedido: 0,
         stock: 5,
         ventas: 14

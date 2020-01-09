@@ -22,68 +22,66 @@ export default function Detalles() {
   const classes = useStyles();
 
   return (
-    <Grid container>
-      <Grid item xs={12}>
-        <CardActionArea>
-          <CardMedia
-            className={classes.media}
-            image="/assets/img/marlboroMix.jpg"
-            title="Marlboro Mix"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              Marlboro Mix
+    // <Grid container>
+    //   <Grid item xs={12}>
+    <CardContent>
+      <CardMedia
+        className={classes.media}
+        image="https://i.imgur.com/x2kBCHt.jpg"
+        title="Marlboro Mix"
+      />
+      <Typography gutterBottom variant="h5" component="h2">
+        Marlboro Mix
+      </Typography>
+      <Grid container>
+        <Grid item xs={9}>
+          <div>
+            <Typography display="inline" variant="body1" component="p">
+              12
             </Typography>
-            <Grid container>
-              <Grid item xs={9}>
-                <div>
-                  <Typography display="inline" variant="body1" component="p">
-                    12
-                  </Typography>
-                  <SecText text="Stock actual" />
-                </div>
-                <div>
-                  <Typography display="inline" variant="body1" component="p">
-                    5
-                  </Typography>
-                  <SecText text="Mínimo recomendado" />
-                </div>
-              </Grid>
-              <Grid item xs={3}>
-                <CheckCircleOutlineIcon fontSize="large" />
-              </Grid>
-            </Grid>
-            <Ventas text="Ventas  actuales/promedio" />
-            <Divider variant="middle" />
-            <div className={classes.divMind}>
-              <div className={classes.tableMid}>
-                <SecText text="Semana " />
-                15 / 12
-              </div>
-              <div className={classes.tableMid}>
-                <SecText text="Mes     " />
-                23 / 18
-              </div>
-            </div>
-            <Ventas text="Ventas últimos 3 meses" />
-            <Divider variant="middle" />
-            <div className={classes.divMind}>
-              <div className={classes.tableMid}>
-                <SecText text="enero " />
-                12
-              </div>
-              <div className={classes.tableMid}>
-                <SecText text="diciembre     " />
-                23
-              </div>
-              <div className={classes.tableMid}>
-                <SecText text="noviembre     " />
-                23
-              </div>
-            </div>
-          </CardContent>
-        </CardActionArea>
+            <SecText text="Stock actual" />
+          </div>
+          <div>
+            <Typography display="inline" variant="body1" component="p">
+              5
+            </Typography>
+            <SecText text="Mínimo recomendado" />
+          </div>
+        </Grid>
+        <Grid item xs={3}>
+          <CheckCircleOutlineIcon fontSize="large" />
+        </Grid>
       </Grid>
-    </Grid>
+      <Ventas text="Ventas  actuales/promedio" />
+      <Divider variant="middle" />
+      <div className={classes.divMind}>
+        <div className={classes.tableMid}>
+          <SecText text="Semana " />
+          15 / 12
+        </div>
+        <div className={classes.tableMid}>
+          <SecText text="Mes     " />
+          23 / 18
+        </div>
+      </div>
+      <Ventas text="Ventas últimos 3 meses" />
+      <Divider variant="middle" />
+      <div className={classes.divMind}>
+        <div className={classes.tableMid}>
+          <SecText text="enero " />
+          12
+        </div>
+        <div className={classes.tableMid}>
+          <SecText text="diciembre     " />
+          23
+        </div>
+        <div className={classes.tableMid}>
+          <SecText text="noviembre     " />
+          23
+        </div>
+      </div>
+    </CardContent>
+    //   </Grid>
+    // </Grid>
   );
 }

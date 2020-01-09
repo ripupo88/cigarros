@@ -3,7 +3,7 @@ const appStyle = theme => ({
     maxWidth: 345
   },
   media: {
-    height: 100,
+    height: 140,
     width: "auto",
     textAlign: "center",
     // Handle non-square image. The property isn't supported by IE 11.

@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from "react";
 import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import { SnackbarProvider, useSnackbar } from "notistack";
 //apollo
 import { ApolloProvider } from "@apollo/react-hooks";
 import ApolloClient from "apollo-boost";
@@ -44,46 +45,48 @@ export default function Admin({ ...rest }) {
   };
   if (loged === "") return <Redirect to="/login" />;
   return (
-    <ApolloProvider client={client}>
-      <Switch>
-        <Route path="/admin/pedir">
-          <Lista />
-        </Route>
-        <Route path="/admin/pedido">
-          <Pedido />
-        </Route>
-        <Route exact path="/admin/almacen">
-          <Almacen />
-        </Route>
-        <Route path="/admin/almacen/informe">
-          <Informe />
-        </Route>
-        {/* <Route path="/admin/:id">
+    <SnackbarProvider maxSnack={3}>
+      <ApolloProvider client={client}>
+        <Switch>
+          <Route path="/admin/pedir">
+            <Lista />
+          </Route>
+          <Route path="/admin/pedido">
+            <Pedido />
+          </Route>
+          <Route exact path="/admin/almacen">
+            <Almacen />
+          </Route>
+          <Route path="/admin/almacen/informe">
+            <Informe />
+          </Route>
+          {/* <Route path="/admin/:id">
                         <Info />
                     </Route> */}
-      </Switch>
+        </Switch>
 
-      <BottomNavigation
-        value={value}
-        onChange={handleChange}
-        className={classes.appBar}
-      >
-        <BottomNavigationAction
-          label="Pedir"
-          value="pedir"
-          icon={<ShoppingCartOutlinedIcon />}
-        />
-        <BottomNavigationAction
-          label="Pedido"
-          value="pedido"
-          icon={<FormatListNumberedRoundedIcon />}
-        />
-        <BottomNavigationAction
-          label="Almacen"
-          value="almacen"
-          icon={<StoreIcon />}
-        />
-      </BottomNavigation>
-    </ApolloProvider>
+        <BottomNavigation
+          value={value}
+          onChange={handleChange}
+          className={classes.appBar}
+        >
+          <BottomNavigationAction
+            label="Pedir"
+            value="pedir"
+            icon={<ShoppingCartOutlinedIcon />}
+          />
+          <BottomNavigationAction
+            label="Pedido"
+            value="pedido"
+            icon={<FormatListNumberedRoundedIcon />}
+          />
+          <BottomNavigationAction
+            label="Almacen"
+            value="almacen"
+            icon={<StoreIcon />}
+          />
+        </BottomNavigation>
+      </ApolloProvider>
+    </SnackbarProvider>
   );
 }
