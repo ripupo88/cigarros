@@ -23,6 +23,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Fade from "@material-ui/core/Fade";
 //icons
+import AddIcon from "@material-ui/icons/Add";
 import SortByAlphaIcon from "@material-ui/icons/SortByAlpha";
 import EuroIcon from "@material-ui/icons/Euro";
 import StoreIcon from "@material-ui/icons/Store";
@@ -30,6 +31,7 @@ import StoreIcon from "@material-ui/icons/Store";
 import styles from "./almacen.css";
 //imports
 import { cigarList } from "../assets/info/cigar";
+import { Divider } from "@material-ui/core";
 
 let cigArray = [];
 
@@ -85,6 +87,7 @@ const useStyles = makeStyles(styles);
 export default function NestedList() {
   const classes = useStyles();
   const [openModal, setOpenModal] = React.useState(false);
+  const [openModal1, setOpenModal1] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [nameCig, setNameCig] = React.useState(null);
@@ -92,15 +95,22 @@ export default function NestedList() {
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
     setOpenModal(false);
+    setOpenModal1(false);
   };
 
   const handleModalClick = () => {
     setOpenModal(false);
+    setOpenModal1(false);
   };
 
   const handleClose = () => {
     setOpenModal(false);
+    setOpenModal1(false);
     setAnchorEl(null);
+  };
+
+  const handleCrearClick = () => {
+    setOpenModal1(true);
   };
 
   const handlePedidoClick = (i2, item) => {
@@ -126,6 +136,41 @@ export default function NestedList() {
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
+        open={openModal1}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500
+        }}
+      >
+        <Fade in={openModal}>
+          <div className={classes.paper}>
+            <h2 id="transition-modal-title">Crear Producto</h2>
+            <TextField
+              autoFocus
+              type="Number"
+              label="Marca"
+              id="margin-none"
+              className={classes.textField}
+              helperText="Número de cartones de 10"
+            />
+            <Button
+              onClick={handleModalClick}
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              //endIcon={<Icon>send</Icon>}
+            >
+              Enviar
+            </Button>
+          </div>
+        </Fade>
+      </Modal>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
         open={openModal}
         onClose={handleClose}
         closeAfterTransition
@@ -144,7 +189,7 @@ export default function NestedList() {
               label="Cantidad"
               id="margin-none"
               className={classes.textField}
-              helperText="Número de cartones"
+              helperText="Número de cartones de 10"
             />
             <Button
               onClick={handleModalClick}
@@ -198,6 +243,13 @@ export default function NestedList() {
               </ListItemIcon>
               por ventas
             </MenuItem>
+            <Divider />
+            <MenuItem onClick={handleCrearClick}>
+              <ListItemIcon>
+                <AddIcon fontSize="small" />
+              </ListItemIcon>
+              crear producto
+            </MenuItem>
           </Menu>
         </Toolbar>
       </AppBar>
@@ -234,7 +286,7 @@ export default function NestedList() {
                 >
                   <ListItemText
                     primary={
-                      <Typography variant="button" component="h4">
+                      <Typography variant="body1" component="h4">
                         {value2.nombre}
                       </Typography>
                     }

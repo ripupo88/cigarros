@@ -263,7 +263,7 @@ function NestedList(props) {
                         </ListItemIcon>
                         <ListItemText
                           primary={
-                            <Typography variant="button" component="h4">
+                            <Typography variant="body1" component="h4">
                               {value2.nombre}
                             </Typography>
                           }
