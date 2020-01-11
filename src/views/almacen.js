@@ -136,7 +136,7 @@ export default function NestedList() {
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
-        open={openModal1}
+        open={openModal}
         onClose={handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
@@ -146,11 +146,12 @@ export default function NestedList() {
       >
         <Fade in={openModal}>
           <div className={classes.paper}>
-            <h2 id="transition-modal-title">Crear Producto</h2>
+            <h2 id="transition-modal-title">{nameCig}</h2>
+            <p id="transition-modal-description">Entrada en almacén.</p>
             <TextField
               autoFocus
               type="Number"
-              label="Marca"
+              label="Cantidad"
               id="margin-none"
               className={classes.textField}
               helperText="Número de cartones de 10"
@@ -171,7 +172,7 @@ export default function NestedList() {
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
-        open={openModal}
+        open={openModal1}
         onClose={handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
@@ -179,17 +180,23 @@ export default function NestedList() {
           timeout: 500
         }}
       >
-        <Fade in={openModal}>
+        <Fade in={openModal1}>
           <div className={classes.paper}>
-            <h2 id="transition-modal-title">{nameCig}</h2>
-            <p id="transition-modal-description">Entrada en almacén.</p>
+            <h2 id="transition-modal-title">Crear Producto</h2>
             <TextField
               autoFocus
               type="Number"
-              label="Cantidad"
+              label="Marca"
               id="margin-none"
               className={classes.textField}
-              helperText="Número de cartones de 10"
+              //helperText="Marca del producto si lleva"
+            />
+            <TextField
+              type="Number"
+              label="Nombre"
+              id="margin-none"
+              className={classes.textField}
+              //helperText="Nombre del producto"
             />
             <Button
               onClick={handleModalClick}

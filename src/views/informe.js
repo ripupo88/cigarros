@@ -25,11 +25,9 @@ export default function Detalles() {
     // <Grid container>
     //   <Grid item xs={12}>
     <CardContent>
-      <CardMedia
-        className={classes.media}
-        image="https://i.imgur.com/x2kBCHt.jpg"
-        title="Marlboro Mix"
-      />
+      <CardMedia title="Marlboro Mix">
+        <img className={classes.media} src="https://i.imgur.com/x2kBCHt.jpg" />{" "}
+      </CardMedia>
       <Typography gutterBottom variant="h5" component="h2">
         Marlboro Mix
       </Typography>
