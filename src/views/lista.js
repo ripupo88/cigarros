@@ -24,6 +24,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Fade from "@material-ui/core/Fade";
 //icons
+import ClearIcon from "@material-ui/icons/Clear";
 import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
 import SendIcon from "@material-ui/icons/Send";
 import SettingsOutlinedIcon from "@material-ui/icons/SettingsOutlined";
@@ -63,6 +64,7 @@ function compare(a, b) {
 }
 
 const newSetPedido = () => {
+  console.log("miCigarList :", miCigarList);
   let ped = [];
   for (let i = 0; i < miCigarList.length; i++) {
     ped.push([]);
@@ -123,7 +125,7 @@ function NestedList(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const open = Boolean(anchorEl);
-
+  console.log("pedidoState :", pedidoState);
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -267,6 +269,18 @@ function NestedList(props) {
                               {value2.nombre}
                             </Typography>
                           }
+                        />
+                        <ClearIcon
+                          onClick={() => {
+                            miCigarList[i].variantes[i2].pedido = 0;
+                            setPedidoState({
+                              ...pedidoState,
+                              [i]: {
+                                ...pedidoState[i],
+                                [i2]: 0
+                              }
+                            });
+                          }}
                         />
                       </ListItem>
                     </List>

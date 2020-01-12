@@ -2,7 +2,6 @@
 import React from "react";
 import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
 //material core
-import CardActionArea from "@material-ui/core/CardActionArea";
 import Grid from "@material-ui/core/Grid";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -10,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 //material iconos
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+import EditIcon from "@material-ui/icons/Edit";
 //style
 import styles from "./informe.css";
 //components propios
@@ -28,10 +28,11 @@ export default function Detalles() {
       <CardMedia title="Marlboro Mix">
         <img className={classes.media} src="https://i.imgur.com/x2kBCHt.jpg" />{" "}
       </CardMedia>
-      <Typography gutterBottom variant="h5" component="h2">
-        Marlboro Mix
-      </Typography>
       <Grid container>
+        <Typography display="inline" gutterBottom variant="h5" component="h2">
+          Marlboro Mix
+        </Typography>
+        <EditIcon style={{ marginLeft: 70 }} />
         <Grid item xs={9}>
           <div>
             <Typography display="inline" variant="body1" component="p">

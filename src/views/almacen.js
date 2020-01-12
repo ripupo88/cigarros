@@ -185,14 +185,12 @@ export default function NestedList() {
             <h2 id="transition-modal-title">Crear Producto</h2>
             <TextField
               autoFocus
-              type="Number"
               label="Marca"
               id="margin-none"
               className={classes.textField}
               //helperText="Marca del producto si lleva"
             />
             <TextField
-              type="Number"
               label="Nombre"
               id="margin-none"
               className={classes.textField}
